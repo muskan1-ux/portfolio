@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Muskan Sharma — Java Application Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #F4F7FA;
+    --surface: #FFFFFF;
+    --surface-muted: #EAF0F3;
+    --ink: #132229;
+    --ink-soft: #56666F;
+    --line: #D9E2E6;
+    --accent: #0E6E5C;
+    --accent-dim: #E1F0EC;
+    --signal: #C97C2E;
+    --signal-dim: #FBEEE0;
+    --radius: 10px;
+    --maxw: 1080px;
+  }
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  body{
+    margin:0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  a{ color: var(--accent); text-decoration: none; }
+  a:hover{ text-decoration: underline; }
+  .mono{ font-family: 'IBM Plex Mono', monospace; }
+  .wrap{ max-width: var(--maxw); margin: 0 auto; padding: 0 28px; }
+  h1,h2,h3{ margin:0; font-weight: 700; letter-spacing: -0.01em; }
+  p{ margin:0; }
+
+  /* NAV */
+  nav{
+    position: sticky; top:0; z-index: 50;
+    background: rgba(244,247,250,0.9);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--line);
+  }
+  nav .wrap{
+    display:flex; align-items:center; justify-content: space-between;
+    height: 64px;
+  }
+  .brand{ font-weight:700; font-size: 17px; color: var(--ink); }
+  .brand span{ color: var(--accent); }
+  .navlinks{ display:flex; gap: 28px; }
+  .navlinks a{
+    color: var(--ink-soft); font-size: 14.5px; font-weight: 500;
+  }
+  .navlinks a:hover{ color: var(--accent); text-decoration:none; }
+
+  /* HERO */
+  .hero{ padding: 76px 0 64px; }
+  .hero-grid{
+    display:grid; grid-template-columns: 1.1fr 1fr; gap: 56px; align-items: start;
+  }
+  .eyebrow-role{
+    color: var(--accent); font-weight: 600; font-size: 15px; margin-bottom: 14px;
+  }
+  .hero h1{ font-size: 44px; line-height: 1.12; margin-bottom: 16px; }
+  .hero .lede{
+    color: var(--ink-soft); font-size: 17px; max-width: 46ch; margin-bottom: 28px;
+  }
+  .cta-row{ display:flex; gap:12px; flex-wrap:wrap; margin-bottom: 34px; }
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding: 11px 18px; border-radius: 8px; font-size: 14.5px; font-weight: 600;
+    border: 1px solid transparent; cursor:pointer;
+  }
+  .btn:hover{ text-decoration:none; }
+  .btn-primary{ background: var(--accent); color: #fff; }
+  .btn-primary:hover{ background: #0B5A4B; }
+  .btn-ghost{ background: transparent; color: var(--ink); border-color: var(--line); }
+  .btn-ghost:hover{ border-color: var(--accent); color: var(--accent); }
+
+  .stat-row{ display:flex; gap: 14px; flex-wrap: wrap; }
+  .stat-box{
+    border: 1px solid var(--line); background: var(--surface);
+    border-radius: 8px; padding: 12px 16px; min-width: 128px;
+  }
+  .stat-box .num{ font-family:'IBM Plex Mono',monospace; font-weight:600; font-size: 21px; color: var(--accent); }
+  .stat-box .label{ font-size: 12.5px; color: var(--ink-soft); margin-top: 2px; }
+
+  /* console card */
+  .console{
+    background: #0F1B21; border-radius: 8px; overflow:hidden;
+    box-shadow: 0 20px 40px -18px rgba(15,27,33,0.35);
+    border: 1px solid #1D2C33;
+  }
+  .console-head{
+    display:flex; align-items:center; justify-content: space-between;
+    padding: 10px 16px; border-bottom: 1px solid #1D2C33;
+    font-family:'IBM Plex Mono',monospace; font-size: 12.5px; color: #7FA79B;
+  }
+  .console-head .path{ color: #E7F0EE; }
+  .console-body{
+    padding: 18px 16px 22px; font-family:'IBM Plex Mono',monospace; font-size: 13px;
+    color: #C9D6D2; min-height: 240px; white-space: pre-wrap; word-break: break-word;
+  }
+  .console-body .cmd{ color: #7FD9BC; }
+  .console-body .key{ color: #79B8C9; }
+  .console-body .str{ color: #E3B776; }
+  .caret{
+    display:inline-block; width: 7px; height: 15px; background:#7FD9BC;
+    vertical-align: -2px; animation: blink 1s step-start infinite;
+  }
+  @keyframes blink{ 50%{ opacity:0; } }
+
+  /* SECTIONS */
+  section{ padding: 58px 0; border-top: 1px solid var(--line); }
+  .section-head{ display:flex; align-items:baseline; justify-content:space-between; margin-bottom: 30px; }
+  .section-head h2{ font-size: 24px; }
+  .section-head .idx{ font-family:'IBM Plex Mono',monospace; color: var(--ink-soft); font-size: 13px; }
+
+  /* about */
+  .about-text{ max-width: 68ch; color: var(--ink-soft); font-size: 16px; }
+  .about-text strong{ color: var(--ink); font-weight: 600; }
+
+  /* experience — event stream */
+  .stream{ position:relative; padding-left: 26px; }
+  .stream::before{
+    content:''; position:absolute; left: 5px; top: 6px; bottom: 6px; width: 2px;
+    background: var(--line);
+  }
+  .stream-item{ position: relative; margin-bottom: 34px; }
+  .stream-item:last-child{ margin-bottom:0; }
+  .stream-item::before{
+    content:''; position:absolute; left: -26px; top: 4px; width: 12px; height:12px;
+    background: var(--surface); border: 2px solid var(--accent); border-radius: 50%;
+  }
+  .role-top{ display:flex; flex-wrap:wrap; align-items:baseline; gap: 8px 14px; margin-bottom: 6px; }
+  .role-title{ font-size: 17px; font-weight: 700; }
+  .role-org{ color: var(--accent); font-weight: 600; font-size: 15px; }
+  .role-meta{ font-family:'IBM Plex Mono',monospace; font-size: 12.5px; color: var(--ink-soft); margin-bottom: 12px; }
+  .role-list{ margin:0; padding-left: 18px; color: var(--ink-soft); }
+  .role-list li{ margin-bottom: 6px; }
+  .role-list b{ color: var(--ink); font-weight:600; }
+
+  /* skills */
+  .skill-groups{ display:grid; grid-template-columns: repeat(2, 1fr); gap: 22px 40px; }
+  .skill-group h3{ font-size: 14px; margin-bottom: 10px; color: var(--ink); }
+  .chip-row{ display:flex; flex-wrap:wrap; gap: 8px; }
+  .chip{
+    font-size: 13px; padding: 6px 12px; border-radius: 999px;
+    background: var(--accent-dim); color: var(--accent); border: 1px solid transparent;
+  }
+
+  /* project */
+  .project-card{
+    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 30px 32px;
+  }
+  .project-top{ display:flex; justify-content:space-between; align-items:flex-start; gap: 20px; flex-wrap: wrap; margin-bottom: 16px;}
+  .project-top h3{ font-size: 20px; margin-bottom: 6px; }
+  .project-top .sub{ color: var(--ink-soft); font-size: 14px; }
+  .project-desc{ color: var(--ink-soft); max-width: 70ch; margin-bottom: 22px; }
+  .project-desc b{ color: var(--ink); }
+
+  .flow{ display:flex; flex-direction:column; gap: 0; margin: 26px 0 30px; align-items:flex-start; }
+  .flow-step{
+    display:flex; align-items:center; gap: 12px; padding: 9px 14px;
+    background: var(--surface-muted); border: 1px solid var(--line); border-radius: 7px;
+    font-family:'IBM Plex Mono',monospace; font-size: 12.5px; color: var(--ink);
+  }
+  .flow-connector{ width:2px; height: 20px; background: var(--line); margin-left: 20px; }
+  .flow-branch{ display:flex; gap:10px; margin-left: 32px; margin-top: 4px; }
+  .flow-branch .flow-step{ background: var(--signal-dim); }
+  .flow-branch .flow-step.claude{ background: var(--accent-dim); }
+
+  table.mapping{ width:100%; border-collapse: collapse; margin-top: 6px; }
+  table.mapping th, table.mapping td{
+    text-align:left; padding: 10px 12px; border-bottom: 1px solid var(--line); font-size: 14px;
+    vertical-align: top;
+  }
+  table.mapping th{ color: var(--ink-soft); font-weight: 600; font-size: 12.5px; }
+  table.mapping td.code{ font-family:'IBM Plex Mono',monospace; font-size: 12.5px; color: var(--accent); }
+
+  .stack-chips{ display:flex; flex-wrap:wrap; gap: 8px; margin: 18px 0 22px; }
+  .stack-chip{
+    font-family:'IBM Plex Mono',monospace; font-size: 12px; padding: 5px 10px;
+    border: 1px solid var(--line); border-radius: 6px; color: var(--ink-soft); background: var(--surface);
+  }
+  .project-links{ display:flex; gap: 14px; }
+
+  /* education */
+  .edu-card{
+    display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap: 10px;
+    border: 1px solid var(--line); border-radius: var(--radius); padding: 20px 24px; background: var(--surface);
+  }
+  .edu-card .school{ font-weight:700; font-size: 16px; }
+  .edu-card .degree{ color: var(--ink-soft); font-size: 14.5px; margin-top: 4px; }
+  .edu-card .when{ font-family:'IBM Plex Mono',monospace; color: var(--ink-soft); font-size: 13px; }
+
+  /* certificates */
+  .cert-grid{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .cert-card{
+    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 20px 22px; display:flex; flex-direction:column; gap: 10px;
+  }
+  .cert-card:hover{ border-color: var(--accent); }
+  .cert-name{ font-weight: 700; font-size: 15px; line-height:1.35; }
+  .cert-issuer{ font-family:'IBM Plex Mono',monospace; font-size: 12px; color: var(--accent); }
+  .cert-note{ font-size: 13px; color: var(--ink-soft); }
+  .cert-link{ font-size: 13px; font-weight: 600; margin-top: 2px; }
+  @media (max-width: 860px){ .cert-grid{ grid-template-columns: 1fr; } }
+
+  footer{ border-top: 1px solid var(--line); padding: 40px 0 46px; }
+  .footer-row{ display:flex; justify-content:space-between; flex-wrap:wrap; gap: 16px; align-items:center; }
+  .footer-links{ display:flex; gap: 22px; font-size: 14px; }
+  .foot-note{ color: var(--ink-soft); font-size: 13px; }
+
+  @media (max-width: 860px){
+    .hero-grid{ grid-template-columns: 1fr; }
+    .skill-groups{ grid-template-columns: 1fr; }
+    .hero h1{ font-size: 34px; }
+    .navlinks{ display:none; }
+  }
+
+  :focus-visible{ outline: 2px solid var(--accent); outline-offset: 2px; }
+  @media (prefers-reduced-motion: reduce){
+    .caret{ animation:none; }
+    html{ scroll-behavior:auto; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">Muskan <span>Sharma</span></div>
+    <div class="navlinks">
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#project">Project</a>
+      <a href="#skills">Skills</a>
+      <a href="#certificates">Certificates</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow-role">Java Application Engineer — Microservices, APIs &amp; AI-Assisted SDLC</div>
+      <h1>I build backend systems that keep financial platforms running, and teach them to handle their own exceptions.</h1>
+      <p class="lede">5+ years designing resilient microservices and event-driven reporting engines on Java 21 and Spring Boot — now bringing AI agents into the same pipelines to automate the parts that used to sit in a review queue.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#project">See the project</a>
+        <a class="btn btn-ghost" href="mailto:muskansharma.ms66@gmail.com">Email me</a>
+        <a class="btn btn-ghost" href="https://github.com/muskan301-oss" target="_blank" rel="noopener">GitHub</a>
+      </div>
+      <div class="stat-row">
+        <div class="stat-box"><div class="num">5+</div><div class="label">years in production Java</div></div>
+        <div class="stat-box"><div class="num">30%</div><div class="label">throughput gain, TCS</div></div>
+        <div class="stat-box"><div class="num">50%</div><div class="label">faster exception triage</div></div>
+      </div>
+    </div>
+
+    <div class="console" id="console">
+      <div class="console-head">
+        <span class="path">GET /api/triage/:id</span>
+        <span>ai-agentic-report-platform</span>
+      </div>
+      <div class="console-body" id="consoleBody"></div>
+    </div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="wrap">
+    <div class="section-head"><h2>About</h2><span class="idx mono">01</span></div>
+    <p class="about-text">
+      I'm a Java Application Engineer, currently at <strong>Tata Consultancy Services</strong>,
+      where I design event-driven microservices for high-volume transactional workflows. My work sits at the
+      intersection of two things: dependable backend systems — Java 21, Spring Boot, Kafka, Redis — and
+      AI-assisted engineering, where I use multi-step agents and structured tool-calling to automate work that
+      used to need a human in the loop, like log parsing and exception triage. Before TCS, I built core API and
+      reporting modules for financial platforms at <strong>Intellect Design Arena</strong>.
+    </p>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap">
+    <div class="section-head"><h2>Experience</h2><span class="idx mono">02</span></div>
+    <div class="stream">
+
+      <div class="stream-item">
+        <div class="role-top">
+          <span class="role-title">Senior Java Developer</span>
+          <span class="role-org">Tata Consultancy Services</span>
+        </div>
+        <div class="role-meta">May 2023 — Present · Mumbai, India</div>
+        <ul class="role-list">
+          <li><b>Scalable microservices:</b> designed and deployed distributed, event-driven services on Java 21 and Spring Boot, serving high-volume transactional workflows at sub-second latency.</li>
+          <li><b>API-first, high-throughput engines:</b> integrated Kafka event streaming and Redis caching with relational databases, lifting system throughput by 30%.</li>
+          <li><b>AI-assisted SDLC:</b> embedded multi-step agents (LangChain, tool calling, structured outputs) into the pipeline to automate code triage, log parsing, and exception management.</li>
+          <li><b>Full-stack integration:</b> partnered with product teams to connect microservices to React/Angular reporting modules for financial account workflows.</li>
+          <li><b>Testing discipline:</b> enforced JUnit and Mockito coverage alongside automated OCI containerization for production releases.</li>
+        </ul>
+      </div>
+
+      <div class="stream-item">
+        <div class="role-top">
+          <span class="role-title">Software Engineer — Systems &amp; API Integrations</span>
+          <span class="role-org">Intellect Design Arena Limited</span>
+        </div>
+        <div class="role-meta">Aug 2021 — Nov 2022 · Chennai, India</div>
+        <ul class="role-list">
+          <li><b>Core API development:</b> built RESTful services, backend financial modules, and webhooks on Java 8/17, Spring Boot, and SQL databases.</li>
+          <li><b>Database optimization:</b> tuned PL/SQL queries and stored procedures, speeding up transactional reporting by 25%.</li>
+          <li><b>Test &amp; build automation:</b> wrote regression and unit suites (JUnit, Mockito, Postman) and managed Maven/Git/Docker deployments.</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="project">
+  <div class="wrap">
+    <div class="section-head"><h2>Featured project</h2><span class="idx mono">03</span></div>
+
+    <div class="project-card">
+      <div class="project-top">
+        <div>
+          <h3>AI Agentic Report Validation &amp; Exception Triage Platform</h3>
+          <div class="sub">Open-source rebuild of the enterprise workflow described below — runnable, not just described</div>
+        </div>
+      </div>
+
+      <p class="project-desc">
+        At TCS, I helped build a client reporting engine where exceptions raised during report generation are
+        automatically triaged by a multi-step AI agent instead of sitting in a human review queue. To make that
+        claim verifiable, I rebuilt the architecture from scratch as an open-source project: an event-driven
+        engine on <b>Java 21, Spring Boot, Kafka, and Redis</b>, with an agent module that prefers a real Claude
+        reasoning call and falls back to a deterministic rule engine when no API key is set — so the whole thing
+        still runs end to end, offline.
+      </p>
+
+      <div class="stack-chips">
+        <span class="stack-chip">Java 21</span>
+        <span class="stack-chip">Spring Boot 3</span>
+        <span class="stack-chip">Spring Kafka</span>
+        <span class="stack-chip">Spring Data Redis</span>
+        <span class="stack-chip">Claude API</span>
+        <span class="stack-chip">JUnit 5 + Mockito</span>
+        <span class="stack-chip">Docker Compose</span>
+      </div>
+
+      <div class="flow">
+        <div class="flow-step">simulate-exception → ReportService.markException()</div>
+        <div class="flow-connector"></div>
+        <div class="flow-step">Kafka topic: report-events</div>
+        <div class="flow-connector"></div>
+        <div class="flow-step">ReportEventConsumer → ExceptionTriageAgent</div>
+        <div class="flow-connector"></div>
+        <div class="flow-step">LogParserTool</div>
+        <div class="flow-branch">
+          <div class="flow-step claude">Claude reasoning (if configured)</div>
+          <div class="flow-step">SeverityClassifier + RemediationSuggester (fallback)</div>
+        </div>
+        <div class="flow-connector"></div>
+        <div class="flow-step">Kafka topic: triage-results + cached TriageResult</div>
+      </div>
+
+      <table class="mapping">
+        <tr><th>Resume claim</th><th>Where it lives in the code</th></tr>
+        <tr><td>High-concurrency, event-driven client engine</td><td class="code">ReportEventProducer / ReportEventConsumer</td></tr>
+        <tr><td>Redis caching for real-time reporting data</td><td class="code">RedisConfig, ReportService</td></tr>
+        <tr><td>Agent framework with structured tool-calling</td><td class="code">agent/ — LogParserTool → SeverityClassifierTool → RemediationSuggesterTool</td></tr>
+        <tr><td>Cut manual triage turnaround</td><td class="code">Consumer auto-triggers triage on exception — no human first pass</td></tr>
+      </table>
+
+      <div class="project-links" style="margin-top:22px;">
+        <a href="https://github.com/muskan301-oss/ai-agentic-report-platform" target="_blank" rel="noopener">View on GitHub</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="section-head"><h2>Skills</h2><span class="idx mono">04</span></div>
+    <div class="skill-groups">
+      <div class="skill-group">
+        <h3>Languages</h3>
+        <div class="chip-row">
+          <span class="chip">Java 8/21</span><span class="chip">SQL</span><span class="chip">PL/SQL</span>
+          <span class="chip">Shell</span><span class="chip">JavaScript/TypeScript</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>Backend &amp; microservices</h3>
+        <div class="chip-row">
+          <span class="chip">Spring Boot</span><span class="chip">Microservices architecture</span>
+          <span class="chip">REST / gRPC</span><span class="chip">OOD &amp; patterns</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>Messaging &amp; data</h3>
+        <div class="chip-row">
+          <span class="chip">Kafka</span><span class="chip">Redis</span><span class="chip">PostgreSQL</span>
+          <span class="chip">MS SQL Server</span><span class="chip">NoSQL</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>AI-assisted development</h3>
+        <div class="chip-row">
+          <span class="chip">LangChain</span><span class="chip">Agentic workflows</span>
+          <span class="chip">Tool / function calling</span><span class="chip">Prompt engineering</span>
+          <span class="chip">Copilot</span><span class="chip">Claude</span><span class="chip">Windsurf</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>Frontend &amp; integration</h3>
+        <div class="chip-row">
+          <span class="chip">React</span><span class="chip">Angular</span><span class="chip">Full-stack workflows</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>DevOps &amp; infrastructure</h3>
+        <div class="chip-row">
+          <span class="chip">Git</span><span class="chip">Maven</span><span class="chip">JUnit</span>
+          <span class="chip">Mockito</span><span class="chip">Docker</span><span class="chip">OCI</span><span class="chip">CI/CD</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="certificates">
+  <div class="wrap">
+    <div class="section-head"><h2>Certificates</h2><span class="idx mono">05</span></div>
+    <div class="cert-grid">
+      <div class="cert-card">
+        <div class="cert-name">Technical Support Fundamentals</div>
+        <div class="cert-issuer">Google · Coursera</div>
+        <a class="cert-link" href="https://www.coursera.org/account/accomplishments/verify/8P8Q7WN7VDQY?utm_source=ios&utm_medium=certificate&utm_content=cert_image&utm_campaign=sharing_cta&utm_product=course" target="_blank" rel="noopener">View credential</a>
+      </div>
+      <div class="cert-card">
+        <div class="cert-name">Introduction to Cybersecurity Tools &amp; Cyber Attacks</div>
+        <div class="cert-issuer">IBM · Coursera</div>
+        <a class="cert-link" href="https://www.coursera.org/account/accomplishments/verify/YLUA5SJZNL45?utm_source=ios&utm_medium=certificate&utm_content=cert_image&utm_campaign=sharing_cta&utm_product=course" target="_blank" rel="noopener">View credential</a>
+      </div>
+      <div class="cert-card">
+        <div class="cert-name">Facial Expression Recognition with Keras</div>
+        <div class="cert-issuer">Coursera Guided Project</div>
+        <div class="cert-note">Offered through a deprecated Guided Projects program</div>
+        <a class="cert-link" href="https://www.coursera.org/account/accomplishments/verify/XC3FREP98XLE?utm_source=ios&utm_medium=certificate&utm_content=cert_image&utm_campaign=sharing_cta&utm_product=course" target="_blank" rel="noopener">View credential</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="education">
+  <div class="wrap">
+    <div class="section-head"><h2>Education</h2><span class="idx mono">06</span></div>
+    <div class="edu-card">
+      <div>
+        <div class="school">Rajiv Gandhi Proudyogiki Vishwavidyalaya (RGPV)</div>
+        <div class="degree">B.Tech, Computer Science &amp; Engineering · Bhopal, MP</div>
+      </div>
+      <div class="when">2017 — 2021</div>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="footer-row">
+      <div>
+        <div style="font-weight:700; font-size:16px; margin-bottom:4px;">Let's talk about your backend.</div>
+        <div class="foot-note">Mumbai, India · +91 6266753881</div>
+      </div>
+      <div class="footer-links">
+        <a href="mailto:muskansharma.ms66@gmail.com">muskansharma.ms66@gmail.com</a>
+        <a href="https://www.linkedin.com/in/muskansharma301/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://github.com/muskan301-oss" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Single orchestrated hero reveal: type out the request/response in the console card.
+  (function(){
+    var body = document.getElementById('consoleBody');
+    var lines = [
+      {t:'cmd', text:'curl localhost:8080/api/triage/6f2e...'},
+      {t:'plain', text:''},
+      {t:'plain', text:'{'},
+      {t:'plain', text:'  <span class="key">"category"</span>: <span class="str">"downstream-dependency"</span>,'},
+      {t:'plain', text:'  <span class="key">"severity"</span>: <span class="str">"HIGH"</span>,'},
+      {t:'plain', text:'  <span class="key">"suggestedRemediation"</span>: <span class="str">"Retry with backoff;'},
+      {t:'plain', text:'    open an incident if it recurs."</span>,'},
+      {t:'plain', text:'  <span class="key">"reasoningSteps"</span>: ['},
+      {t:'plain', text:'    "log_parser -> SocketTimeoutException",'},
+      {t:'plain', text:'    "severity_classifier -> HIGH",'},
+      {t:'plain', text:'    "remediation_suggester -> retry + escalate"'},
+      {t:'plain', text:'  ],'},
+      {t:'plain', text:'  <span class="key">"source"</span>: <span class="str">"claude-sonnet-4-6"</span>'},
+      {t:'plain', text:'}'}
+    ];
+
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function render(){
+      var html = '';
+      lines.forEach(function(l, i){
+        var cls = l.t === 'cmd' ? 'cmd' : '';
+        html += '<div class="' + cls + '">' + l.text + '</div>';
+      });
+      body.innerHTML = html;
+    }
+
+    if(reduce){ render(); return; }
+
+    var i = 0;
+    function step(){
+      if(i >= lines.length){
+        body.insertAdjacentHTML('beforeend', '<span class="caret"></span>');
+        return;
+      }
+      var l = lines[i];
+      var cls = l.t === 'cmd' ? 'cmd' : '';
+      body.insertAdjacentHTML('beforeend', '<div class="' + cls + '">' + l.text + '</div>');
+      i++;
+      setTimeout(step, l.text === '' ? 120 : 140);
+    }
+    step();
+  })();
+</script>
+
+</body>
+</html>
